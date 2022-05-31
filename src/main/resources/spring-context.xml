@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="questionDao" class="ru.otus.spring.dao.QuestionDaoImpl">
+        <constructor-arg name="resource" value="questions_and_answers.csv"/>
+    </bean>
+    <bean id="answerDao" class="ru.otus.spring.dao.AnswerDaoImpl">
+        <constructor-arg name="resource" value="questions_and_answers.csv"/>
+    </bean>
+
+    <bean id="questionService" class="ru.otus.spring.service.QuestionServiceImpl">
+        <constructor-arg name="questionDao" ref="questionDao"/>
+        <constructor-arg name="answerDao" ref="answerDao"/>
+
+    </bean>
+</beans>

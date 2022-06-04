@@ -1,8 +1,7 @@
 package ru.otus.spring.dao;
 
-import lombok.Data;
 import org.springframework.core.io.Resource;
-import ru.otus.spring.domain.Question;
+import ru.otus.spring.domain.Answer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,41 +12,33 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toCollection;
 
-@Data
-public class QuestionDaoImpl implements QuestionDao {
 
+public class AnswerDaoCsvFile implements AnswerDao {
     private static final String SEPARATOR = ",";
     private final Resource resource;
-    private List<Question> list;
 
-    public QuestionDaoImpl(Resource resource) {
+    public AnswerDaoCsvFile(Resource resource) {
         this.resource = resource;
     }
 
     @Override
-    public List<Question> findAllQuestions() {
-        return this.getAllQuestionsFromResource(resource);
+    public List<Answer> findAllAnswers() throws IOException {
+        return this.getAllAnswersFromResource(resource);
     }
 
-    private List<Question> getAllQuestionsFromResource(Resource resource) {
+    private List<Answer> getAllAnswersFromResource(Resource resource) throws IOException {
 
-        try {
-            InputStream resourceAsStream = resource.getInputStream();
+        try (InputStream resourceAsStream = resource.getInputStream()) {
+
             InputStreamReader inputStreamReader = new InputStreamReader(resourceAsStream);
             BufferedReader reader = new BufferedReader(inputStreamReader);
-
-            list = reader.lines()
+            return reader.lines()
                     .map(line -> {
                         String[] csvRecord = line.split(SEPARATOR);
-                        int id = Integer.parseInt(csvRecord[0].strip());
-                        String question = csvRecord[1].strip();
-
-                        return new Question(id, question);
+                        String answer = csvRecord[2].strip();
+                        return new Answer(answer);
                     })
                     .collect(toCollection(ArrayList::new));
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return list;
     }
 }

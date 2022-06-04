@@ -5,6 +5,7 @@ import ru.otus.spring.dao.QuestionDao;
 import ru.otus.spring.domain.Answer;
 import ru.otus.spring.service.ReaderWriter.ReaderWriterImpl;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -21,14 +22,13 @@ public class QuestionServiceImpl implements QuestionService {
         this.answerDao = answerDao;
     }
 
-    public void run() {
+    public void run() throws IOException {
         name = askName();
         List<Answer> answerList = answerDao.findAllAnswers();
 
         questionDao.findAllQuestions().forEach(question -> {
-                    Answer answer = new Answer();
                     readerWriter.writeToConsole(question.getName());
-                    answer.setName(readerWriter.read());
+                    Answer answer = new Answer(readerWriter.read());
                     if (answerList.contains(answer)) {
                         countRightAnswer++;
                     }
@@ -45,7 +45,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void showResult() {
+    public void showResult() throws IOException {
         System.out.println(name + ", вы ответили правильно на - " + countRightAnswer + " из " + questionDao.findAllQuestions().size() + " вопросов.");
     }
 }

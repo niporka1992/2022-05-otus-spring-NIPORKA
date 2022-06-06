@@ -2,7 +2,9 @@ package ru.otus.spring.dao;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 import ru.otus.spring.domain.Question;
 
 import java.io.BufferedReader;
@@ -14,14 +16,14 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toCollection;
 
-
+@Component
 public class QuestionDaoCsvFile implements QuestionDao {
 
     private static final String SEPARATOR = ",";
     private final Resource resource;
 
 
-    public QuestionDaoCsvFile(Resource resource) {
+    public QuestionDaoCsvFile(@Value("${questions}")Resource resource) {
         this.resource = resource;
     }
 

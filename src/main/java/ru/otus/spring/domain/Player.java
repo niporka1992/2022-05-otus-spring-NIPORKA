@@ -5,6 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class Question {
-    private final String name;
+public class Player {
+    private String name;
 }

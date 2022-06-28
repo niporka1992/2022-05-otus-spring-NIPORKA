@@ -1,6 +1,5 @@
 package ru.otus.spring.dao;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import ru.otus.spring.domain.Answer;
@@ -16,11 +15,11 @@ import static java.util.stream.Collectors.toCollection;
 
 @Component
 public class AnswerDaoCsvFile implements AnswerDao {
+
     private static final String SEPARATOR = ",";
     private final Resource resource;
 
-
-    public AnswerDaoCsvFile(@Value("${questions}")Resource resource) {
+    public AnswerDaoCsvFile(Resource resource) {
         this.resource = resource;
     }
 

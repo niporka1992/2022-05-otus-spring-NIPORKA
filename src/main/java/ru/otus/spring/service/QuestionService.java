@@ -1,12 +1,12 @@
 package ru.otus.spring.service;
 
-import java.io.IOException;
-
 public interface QuestionService {
-    void run() throws IOException;
+    void run();
 
-    String askName();
+    void testing();
 
-    void showResult() throws IOException;
+    void askName();
+
+    void showResult();
 
 }
